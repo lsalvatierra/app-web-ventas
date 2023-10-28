@@ -30,14 +30,8 @@ public class LoginController {
         return "frontoffice/auth/frmRegistroUsuario";
     }
 
-    @PostMapping("/login-success")
-    public String loginSucces(HttpServletRequest request){
-        /*UserDetails usuario = (UserDetails) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
-        HttpSession session = request.getSession();
-        session.setAttribute("usuario", usuario.getUsername());*/
+    @GetMapping("/login-success")
+    public String loginSucces(){
         return "redirect:/auth/dashboard";
     }
 
@@ -48,7 +42,13 @@ public class LoginController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(HttpServletRequest request) {
+        /*UserDetails usuario = (UserDetails) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        HttpSession session = request.getSession();
+        session.setAttribute("usuario", usuario.getUsername());*/
         return "frontoffice/auth/home"; // Return the dashboard page
     }
 }
