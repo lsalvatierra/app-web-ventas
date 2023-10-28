@@ -39,7 +39,14 @@ public class SecurityConfig {
                                         .defaultSuccessUrl("/auth/login-success")
                                         .usernameParameter("nomusuario")
                                         .passwordParameter("password")
-                ).authenticationProvider(authenticationProvider());
+
+
+                )
+                .logout(
+                        logout ->
+                            logout.logoutSuccessUrl("/auth/login")
+                                    .invalidateHttpSession(true) )
+                .authenticationProvider(authenticationProvider());
         return http.build();
     }
 

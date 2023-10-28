@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pe.edu.cibertec.appwebventas.model.bd.Usuario;
+import pe.edu.cibertec.appwebventas.model.security.UsuarioSecurity;
 import pe.edu.cibertec.appwebventas.service.UsuarioService;
 
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class LoginController {
     private UsuarioService usuarioService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login(HttpServletRequest request){
         return "frontoffice/auth/frmLogin";
     }
 
@@ -43,12 +44,25 @@ public class LoginController {
 
     @GetMapping("/dashboard")
     public String dashboard(HttpServletRequest request) {
-        UserDetails usuario = (UserDetails) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
         HttpSession session = request.getSession();
-        session.setAttribute("usuario", usuario.getUsername());
+        // Obtén el objeto UserDetails del contexto de seguridad
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Convierte el UserDetails a tu clase Usuario
+        UsuarioSecurity usuario = (UsuarioSecurity) userDetails;
+        // Ahora puedes acceder a los atributos específicos de tu clase Usuario
+        String email = usuario.getEmail();
+        // Realiza cualquier otra operación que necesites con el objeto Usuario
+        session.setAttribute("usuario", email);
         return "frontoffice/auth/home"; // Return the dashboard page
     }
+
+    /*@GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        // Invalidate the HttpSession to log the user out
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/auth/login";
+    }*/
 }
