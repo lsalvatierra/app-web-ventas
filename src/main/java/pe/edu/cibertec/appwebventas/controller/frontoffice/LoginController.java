@@ -43,12 +43,12 @@ public class LoginController {
 
     @GetMapping("/dashboard")
     public String dashboard(HttpServletRequest request) {
-        /*UserDetails usuario = (UserDetails) SecurityContextHolder
+        UserDetails usuario = (UserDetails) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
         HttpSession session = request.getSession();
-        session.setAttribute("usuario", usuario.getUsername());*/
+        session.setAttribute("usuario", usuario.getUsername());
         return "frontoffice/auth/home"; // Return the dashboard page
     }
 }
