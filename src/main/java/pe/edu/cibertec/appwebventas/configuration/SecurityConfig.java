@@ -23,7 +23,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(
                         auth ->
-                                auth.requestMatchers("/auth/login",
+                                auth.requestMatchers("/carrito/principal").hasRole("SUPERADMIN")
+                                        .requestMatchers("/auth/login",
                                         "/auth/registrar",
                                         "/auth/guardarUsuario",
                                         "/resources/**",
@@ -33,6 +34,8 @@ public class SecurityConfig {
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated()
+
+
                 ).formLogin(
                         login ->
                                 login.loginPage("/auth/login")
