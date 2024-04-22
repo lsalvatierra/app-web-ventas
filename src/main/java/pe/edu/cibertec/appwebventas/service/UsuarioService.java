@@ -10,6 +10,7 @@ import pe.edu.cibertec.appwebventas.repository.UsuarioRepository;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -36,5 +37,13 @@ public class UsuarioService {
         Rol usuarioRol = rolRepository.findByNomrol("ADMIN");
         usuario.setRoles(new HashSet<>(Arrays.asList(usuarioRol)));
         return usuarioRepository.save(usuario);
+    }
+
+    public List<Usuario> listarUsuario(){
+        return usuarioRepository.findAll();
+    }
+
+    public Usuario obtenerUsuarioxId(int id){
+        return usuarioRepository.findById(id).orElse(null);
     }
 }

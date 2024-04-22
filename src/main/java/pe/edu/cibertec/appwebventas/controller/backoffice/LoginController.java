@@ -1,10 +1,8 @@
-package pe.edu.cibertec.appwebventas.controller.frontoffice;
+package pe.edu.cibertec.appwebventas.controller.backoffice;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -25,12 +23,12 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(HttpServletRequest request){
-        return "frontoffice/auth/frmLogin";
+        return "backoffice/auth/frmLogin";
     }
 
     @GetMapping("/registrar")
     public String registrar(){
-        return "frontoffice/auth/frmRegistroUsuario";
+        return "backoffice/auth/frmRegistroUsuario";
     }
 
     @GetMapping("/login-success")
@@ -41,8 +39,10 @@ public class LoginController {
     @PostMapping("/guardarUsuario")
     public String guardarUsuario(@ModelAttribute Usuario usuario){
         usuarioService.saveUser(usuario);
-        return "frontoffice/auth/frmLogin";
+        return "backoffice/auth/frmLogin";
     }
+
+
 
     @GetMapping("/dashboard")
     public String dashboard(HttpServletRequest request) {
@@ -55,7 +55,7 @@ public class LoginController {
         String email = usuario.getEmail();
         // Realiza cualquier otra operación que necesites con el objeto Usuario
         session.setAttribute("usuario", email);
-        return "frontoffice/auth/home"; // Return the dashboard page
+        return "backoffice/auth/home"; // Return the dashboard page
     }
 
     /*@GetMapping("/logout")
