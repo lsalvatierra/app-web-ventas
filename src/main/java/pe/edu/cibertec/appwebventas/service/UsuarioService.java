@@ -32,12 +32,19 @@ public class UsuarioService {
 
     public Usuario saveUser(Usuario usuario){
         usuario.setPassword(bCryptPasswordEncoder.encode(
-                usuario.getPassword()));
+                "123456"));
         usuario.setActivo(true);
         Rol usuarioRol = rolRepository.findByNomrol("ADMIN");
         usuario.setRoles(new HashSet<>(Arrays.asList(usuarioRol)));
         return usuarioRepository.save(usuario);
     }
+
+    public void updateUser(Usuario usuario){
+        usuarioRepository.actualizarUsuario(usuario.getNombres(),
+                usuario.getApellidos(), usuario.getActivo(),
+                usuario.getIdusuario());
+    }
+
 
     public List<Usuario> listarUsuario(){
         return usuarioRepository.findAll();

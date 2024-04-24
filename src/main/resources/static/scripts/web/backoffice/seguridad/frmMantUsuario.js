@@ -2,11 +2,15 @@ $(document).on("click", "#btnagregar", function(){
     $("#txtnombre").val("");
     $("#txtapellido").val("");
     $("#txtemail").val("");
+    $('#txtemail').prop('readonly', false);
     $("#txtusuario").val("");
+    $('#txtusuario').prop('readonly', false);
     $("#txtpassword").val("");
     $("#hddidusuario").val("0");
     $("#switchusuario" ).hide();
     $("#chkactivo").prop("checked", false);
+    $("#divmensajepassword").show();
+    $("#btnenviar").hide();
     $("#modalNuevo").modal("show");
 });
 
@@ -19,46 +23,39 @@ $(document).on("click", ".btnactualizar", function(){
                 $("#txtnombre").val(resultado.nombres);
                 $("#txtapellido").val(resultado.apellidos);
                 $("#txtemail").val(resultado.email);
+                $('#txtemail').prop('readonly', true);
                 $("#txtusuario").val(resultado.nomusuario);
-                $("#hddidusuario").val($(this).attr("data-usuid"));
+                $('#txtusuario').prop('readonly', true);
+                $("#hddidusuario").val(resultado.idusuario);
                 $("#switchusuario").show();
+                $("#divmensajepassword").hide();
+                $("#btnenviar").show();
                 if(resultado.activo){
                     $("#chkactivo").prop("checked", true);
                 }else
                     $("#chkactivo").prop("checked", false);
             }
     });
-    /*$("#txtapellido").val($(this).attr("data-usuape"));
-    $("#txtemail").val($(this).attr("data-usuemail"));
-    $("#txtusuario").val($(this).attr("data-usuario"));
-    $("#txtpassword").val("");
-    $("#hddidusuario").val($(this).attr("data-usuid"));
-    $("#switchusuario" ).show();
-    console.log($(this).attr("data-activo"));
-    if($(this).attr("data-activo") === "true"){
-        $("#chkactivo").prop("checked", true);
-    }else
-        $("#chkactivo").prop("checked", false);*/
     $("#modalNuevo").modal("show");
 });
 
 $(document).on("click", "#btnguardar", function(){
     $.ajax({
         type: "POST",
-        url: "/product/registrar",
+        url: "/seguridad/usuario",
         contentType: "application/json",
         data: JSON.stringify({
-            productid: $("#hddidprod").val(),
-            productname: $("#txtnomproducto").val(),
-            unitprice: $("#txtpreciounit").val(),
-            categoryid: $("#cbocategoria").val(),
-            supplierid: $("#cboproveedor").val(),
-            discontinued: $('#chkdescontinuado').prop('checked')
+            idusuario: $("#hddidusuario").val(),
+            nomusuario: $("#txtusuario").val(),
+            nombres: $("#txtnombre").val(),
+            apellidos: $("#txtapellido").val(),
+            email: $("#txtemail").val(),
+            activo: $('#chkactivo').prop('checked')
         }),
         success: function(resultado){
-            if(resultado.respuesta){
+            /*if(resultado.respuesta){
                 listarUsuarios();
-            }
+            }*/
             alert(resultado.mensaje);
         }
     });

@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import pe.edu.cibertec.appwebventas.service.DetalleUsuarioService;
@@ -21,6 +22,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain config (HttpSecurity http) throws Exception{
         http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth ->
                                 auth.requestMatchers("/carrito/principal").hasRole("SUPERADMIN")
@@ -34,8 +36,6 @@ public class SecurityConfig {
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated()
-
-
                 ).formLogin(
                         login ->
                                 login.loginPage("/auth/login")
